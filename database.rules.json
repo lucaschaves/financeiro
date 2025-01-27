@@ -1,0 +1,38 @@
+{
+  "rules": {
+    "transactions": {
+      ".read": true,
+      ".write": true,
+      "$transaction_id": {
+        ".validate": "newData.hasChildren(['description', 'amount', 'type', 'category', 'date', 'status', 'scheduled', 'profile'])",
+        "description": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "amount": {
+          ".validate": "newData.isNumber() && newData.val() > 0"
+        },
+        "type": {
+          ".validate": "newData.isString() && (newData.val() === 'income' || newData.val() === 'expense')"
+        },
+        "category": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "date": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/)"
+        },
+        "status": {
+          ".validate": "newData.isString() && (newData.val() === 'paid' || newData.val() === 'pending' || newData.val() === 'scheduled')"
+        },
+        "scheduled": {
+          ".validate": "newData.isBoolean()"
+        },
+        "profile": {
+          ".validate": "newData.isString() && (newData.val() === 'personal' || newData.val() === 'yoma' || newData.val() === 'mou')"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}
