@@ -1,29 +1,43 @@
-import React, { useState, useMemo } from 'react';
-import { Button, Input, Select, SelectItem, Spinner } from '@nextui-org/react';
-import { PlusCircle } from 'lucide-react';
-import { useTransactions } from '../context/TransactionContext';
-import { useProfile } from '../context/ProfileContext';
-import { TransactionList } from '../components/TransactionList';
-import { TransactionForm } from '../components/TransactionForm';
-import { Transaction } from '../types';
+import { Button, Input, Select, SelectItem, Spinner } from "@nextui-org/react";
+import { PlusCircle } from "lucide-react";
+import { useMemo, useState } from "react";
+import { TransactionForm } from "../components/TransactionForm";
+import { TransactionList } from "../components/TransactionList";
+import { useProfile } from "../context/ProfileContext";
+import { useTransactions } from "../context/TransactionContext";
+import { Transaction } from "../types";
 
 export function TransactionsPage() {
-  const { transactions, updateTransaction, deleteTransaction, addTransaction, isLoading, error } = useTransactions();
+  const {
+    transactions,
+    updateTransaction,
+    deleteTransaction,
+    addTransaction,
+    isLoading,
+    error,
+  } = useTransactions();
   const { currentProfile } = useProfile();
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingTransaction, setEditingTransaction] = useState<Transaction | undefined>();
+  const [editingTransaction, setEditingTransaction] = useState<
+    Transaction | undefined
+  >();
   const [selectedMonth, setSelectedMonth] = useState<string>(
     new Date().toISOString().slice(0, 7)
   );
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredTransactions = useMemo(() => {
     return transactions
-      .filter((transaction) => 
-        transaction.profile === currentProfile &&
-        transaction.date.startsWith(selectedMonth) &&
-        (transaction.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         transaction.category.toLowerCase().includes(searchQuery.toLowerCase()))
+      .filter(
+        (transaction) =>
+          transaction.profile === currentProfile &&
+          transaction.date.startsWith(selectedMonth) &&
+          (transaction.description
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+            transaction.category
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()))
       )
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [transactions, currentProfile, selectedMonth, searchQuery]);
@@ -33,23 +47,28 @@ export function TransactionsPage() {
     setIsFormOpen(true);
   };
 
-  const handleAddTransaction = async (transaction: Omit<Transaction, 'id'>) => {
+  const handleAddTransaction = async (transaction: Omit<Transaction, "id">) => {
     try {
       await addTransaction({ ...transaction, profile: currentProfile });
       setIsFormOpen(false);
     } catch (error) {
-      console.error('Error adding transaction:', error);
+      console.error("Error adding transaction:", error);
     }
   };
 
-  const handleUpdateTransaction = async (updatedTransaction: Omit<Transaction, 'id'>) => {
+  const handleUpdateTransaction = async (
+    updatedTransaction: Omit<Transaction, "id">
+  ) => {
     if (editingTransaction) {
       try {
-        await updateTransaction(editingTransaction.id, { ...updatedTransaction, profile: currentProfile });
+        await updateTransaction(editingTransaction.id, {
+          ...updatedTransaction,
+          profile: currentProfile,
+        });
         setEditingTransaction(undefined);
         setIsFormOpen(false);
       } catch (error) {
-        console.error('Error updating transaction:', error);
+        console.error("Error updating transaction:", error);
       }
     }
   };
@@ -58,15 +77,15 @@ export function TransactionsPage() {
     try {
       await deleteTransaction(id);
     } catch (error) {
-      console.error('Error deleting transaction:', error);
+      console.error("Error deleting transaction:", error);
     }
   };
 
   const months = Array.from({ length: 12 }, (_, i) => {
-    const date = new Date(2024, i, 1);
+    const date = new Date(2025, i, 1);
     return {
       value: date.toISOString().slice(0, 7),
-      label: date.toLocaleString('pt-BR', { month: 'long' }),
+      label: date.toLocaleString("pt-BR", { month: "long" }),
     };
   });
 
@@ -132,7 +151,9 @@ export function TransactionsPage() {
           setIsFormOpen(false);
           setEditingTransaction(undefined);
         }}
-        onSubmit={editingTransaction ? handleUpdateTransaction : handleAddTransaction}
+        onSubmit={
+          editingTransaction ? handleUpdateTransaction : handleAddTransaction
+        }
         editTransaction={editingTransaction}
       />
     </div>

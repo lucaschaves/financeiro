@@ -1,13 +1,13 @@
-export type ProfileType = 'personal' | 'yoma' | 'mou';
+export type ProfileType = "personal" | "yoma" | "mou";
 
 export interface Transaction {
   id: string;
   description: string;
   amount: number;
-  type: 'income' | 'expense';
+  type: "income" | "expense";
   category: string;
   date: string;
-  status: 'paid' | 'pending' | 'scheduled';
+  status: "paid" | "pending" | "scheduled";
   scheduled: boolean;
   profile: ProfileType;
 }

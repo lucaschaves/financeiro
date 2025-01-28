@@ -1,19 +1,18 @@
-import React from 'react';
 import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  Chip,
-  Tooltip,
   Button,
-} from '@nextui-org/react';
-import { Pencil, Trash2, Clock } from 'lucide-react';
-import { Transaction } from '../types';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+  Chip,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tooltip,
+} from "@nextui-org/react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { Clock, Pencil, Trash2 } from "lucide-react";
+import { Transaction } from "../types";
 
 interface TransactionListProps {
   transactions: Transaction[];
@@ -22,12 +21,16 @@ interface TransactionListProps {
 }
 
 const statusColors = {
-  paid: 'success',
-  pending: 'warning',
-  scheduled: 'primary',
+  paid: "success",
+  pending: "warning",
+  scheduled: "primary",
 } as const;
 
-export function TransactionList({ transactions, onEdit, onDelete }: TransactionListProps) {
+export function TransactionList({
+  transactions,
+  onEdit,
+  onDelete,
+}: TransactionListProps) {
   return (
     <Table aria-label="Tabela de transações">
       <TableHeader>
@@ -43,25 +46,29 @@ export function TransactionList({ transactions, onEdit, onDelete }: TransactionL
       <TableBody>
         {transactions.map((transaction) => (
           <TableRow key={transaction.id}>
-            <TableCell>{format(new Date(transaction.date), 'dd MMM, yyyy', { locale: ptBR })}</TableCell>
+            <TableCell>
+              {format(new Date(transaction.date), "dd MMM, yyyy", {
+                locale: ptBR,
+              })}
+            </TableCell>
             <TableCell>{transaction.description}</TableCell>
             <TableCell>{transaction.category}</TableCell>
             <TableCell>R$ {transaction.amount.toFixed(2)}</TableCell>
             <TableCell>
               <Chip
-                color={transaction.type === 'income' ? 'success' : 'danger'}
+                color={transaction.type === "income" ? "success" : "danger"}
                 variant="flat"
               >
-                {transaction.type === 'income' ? 'Receita' : 'Despesa'}
+                {transaction.type === "income" ? "Receita" : "Despesa"}
               </Chip>
             </TableCell>
             <TableCell>
-              <Chip
-                color={statusColors[transaction.status]}
-                variant="flat"
-              >
-                {transaction.status === 'paid' ? 'Pago' : 
-                 transaction.status === 'pending' ? 'Pendente' : 'Agendado'}
+              <Chip color={statusColors[transaction.status]} variant="flat">
+                {transaction.status === "paid"
+                  ? "Pago"
+                  : transaction.status === "pending"
+                  ? "Pendente"
+                  : "Agendado"}
               </Chip>
             </TableCell>
             <TableCell>

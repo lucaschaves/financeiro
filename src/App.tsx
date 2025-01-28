@@ -1,11 +1,10 @@
-import React from 'react';
-import { NextUIProvider } from '@nextui-org/react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Navigation } from './components/Navigation';
-import { DashboardPage } from './pages/DashboardPage';
-import { TransactionsPage } from './pages/TransactionsPage';
-import { TransactionProvider } from './context/TransactionContext';
-import { ProfileProvider } from './context/ProfileContext';
+import { NextUIProvider } from "@nextui-org/react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navigation } from "./components/Navigation";
+import { ProfileProvider } from "./context/ProfileContext";
+import { TransactionProvider } from "./context/TransactionContext";
+import { DashboardPage } from "./pages/DashboardPage";
+import { TransactionsPage } from "./pages/TransactionsPage";
 
 export default function App() {
   return (
@@ -19,7 +18,10 @@ export default function App() {
                 <div className="max-w-7xl mx-auto">
                   <Routes>
                     <Route path="/" element={<DashboardPage />} />
-                    <Route path="/transactions" element={<TransactionsPage />} />
+                    <Route
+                      path="/transactions"
+                      element={<TransactionsPage />}
+                    />
                   </Routes>
                 </div>
               </div>

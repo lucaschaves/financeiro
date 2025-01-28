@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useTransactions } from '../context/TransactionContext';
-import { useProfile } from '../context/ProfileContext';
-import { Dashboard } from '../components/Dashboard';
+import { useState } from "react";
+import { Dashboard } from "../components/Dashboard";
+import { useProfile } from "../context/ProfileContext";
+import { useTransactions } from "../context/TransactionContext";
 
 export function DashboardPage() {
   const { transactions } = useTransactions();
@@ -9,14 +9,15 @@ export function DashboardPage() {
   const [selectedMonth, setSelectedMonth] = useState<string>(
     new Date().toISOString().slice(0, 7)
   );
+  console.log(selectedMonth);
 
   const filteredTransactions = transactions.filter(
     (t) => t.profile === currentProfile && t.date.startsWith(selectedMonth)
   );
 
-  const calculateCategoryStats = (type: 'income' | 'expense') => {
+  const calculateCategoryStats = (type: "income" | "expense") => {
     const categoryMap = new Map<string, number>();
-    
+
     filteredTransactions
       .filter((t) => t.type === type)
       .forEach((t) => {
@@ -32,19 +33,20 @@ export function DashboardPage() {
 
   const stats = {
     totalIncome: filteredTransactions
-      .filter((t) => t.type === 'income')
+      .filter((t) => t.type === "income")
       .reduce((sum, t) => sum + t.amount, 0),
     totalExpenses: filteredTransactions
-      .filter((t) => t.type === 'expense')
+      .filter((t) => t.type === "expense")
       .reduce((sum, t) => sum + t.amount, 0),
-    balance: filteredTransactions
-      .filter((t) => t.type === 'income')
-      .reduce((sum, t) => sum + t.amount, 0) -
+    balance:
       filteredTransactions
-        .filter((t) => t.type === 'expense')
+        .filter((t) => t.type === "income")
+        .reduce((sum, t) => sum + t.amount, 0) -
+      filteredTransactions
+        .filter((t) => t.type === "expense")
         .reduce((sum, t) => sum + t.amount, 0),
-    categoryExpenses: calculateCategoryStats('expense'),
-    categoryIncome: calculateCategoryStats('income'),
+    categoryExpenses: calculateCategoryStats("expense"),
+    categoryIncome: calculateCategoryStats("income"),
   };
 
   return (

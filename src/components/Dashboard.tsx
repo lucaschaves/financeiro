@@ -1,7 +1,13 @@
-import React from 'react';
-import { Card, CardBody, Select, SelectItem } from '@nextui-org/react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import { Transaction, MonthlyStats } from '../types';
+import { Card, CardBody, Select, SelectItem } from "@nextui-org/react";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+import { MonthlyStats, Transaction } from "../types";
 
 interface DashboardProps {
   transactions: Transaction[];
@@ -10,14 +16,26 @@ interface DashboardProps {
   onMonthChange: (month: string) => void;
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
+const COLORS = [
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#8884d8",
+  "#82ca9d",
+];
 
-export function Dashboard({ transactions, stats, selectedMonth, onMonthChange }: DashboardProps) {
+export function Dashboard({
+  // transactions,
+  stats,
+  selectedMonth,
+  onMonthChange,
+}: DashboardProps) {
   const months = Array.from({ length: 12 }, (_, i) => {
-    const date = new Date(2024, i, 1);
+    const date = new Date(2025, i, 1);
     return {
       value: date.toISOString().slice(0, 7),
-      label: date.toLocaleString('pt-BR', { month: 'long' }),
+      label: date.toLocaleString("pt-BR", { month: "long" }),
     };
   });
 
@@ -26,7 +44,7 @@ export function Dashboard({ transactions, stats, selectedMonth, onMonthChange }:
       <div className="mb-6">
         <Select
           label="Filtrar por Mês"
-          value={selectedMonth}
+          selectedKeys={[selectedMonth]}
           onChange={(e) => onMonthChange(e.target.value)}
           className="max-w-xs"
         >
@@ -58,7 +76,11 @@ export function Dashboard({ transactions, stats, selectedMonth, onMonthChange }:
         <Card>
           <CardBody>
             <h3 className="text-lg font-semibold mb-2">Saldo</h3>
-            <p className={`text-2xl ${stats.balance >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            <p
+              className={`text-2xl ${
+                stats.balance >= 0 ? "text-green-500" : "text-red-500"
+              }`}
+            >
               R$ {stats.balance.toFixed(2)}
             </p>
           </CardBody>
@@ -68,7 +90,9 @@ export function Dashboard({ transactions, stats, selectedMonth, onMonthChange }:
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card className="p-4">
           <CardBody>
-            <h3 className="text-lg font-semibold mb-4">Despesas por Categoria</h3>
+            <h3 className="text-lg font-semibold mb-4">
+              Despesas por Categoria
+            </h3>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -79,13 +103,20 @@ export function Dashboard({ transactions, stats, selectedMonth, onMonthChange }:
                     cx="50%"
                     cy="50%"
                     outerRadius={80}
-                    label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                    label={({ name, percent }) =>
+                      `${name} (${(percent * 100).toFixed(0)}%)`
+                    }
                   >
                     {stats.categoryExpenses.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => `R$ ${Number(value).toFixed(2)}`} />
+                  <Tooltip
+                    formatter={(value) => `R$ ${Number(value).toFixed(2)}`}
+                  />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
@@ -95,7 +126,9 @@ export function Dashboard({ transactions, stats, selectedMonth, onMonthChange }:
 
         <Card className="p-4">
           <CardBody>
-            <h3 className="text-lg font-semibold mb-4">Receitas por Categoria</h3>
+            <h3 className="text-lg font-semibold mb-4">
+              Receitas por Categoria
+            </h3>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -106,13 +139,20 @@ export function Dashboard({ transactions, stats, selectedMonth, onMonthChange }:
                     cx="50%"
                     cy="50%"
                     outerRadius={80}
-                    label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                    label={({ name, percent }) =>
+                      `${name} (${(percent * 100).toFixed(0)}%)`
+                    }
                   >
                     {stats.categoryIncome.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => `R$ ${Number(value).toFixed(2)}`} />
+                  <Tooltip
+                    formatter={(value) => `R$ ${Number(value).toFixed(2)}`}
+                  />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>

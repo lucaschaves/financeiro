@@ -1,8 +1,13 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from '@nextui-org/react';
-import { LayoutDashboard, ListOrdered } from 'lucide-react';
-import { ProfileSelector } from './ProfileSelector';
+import {
+  Button,
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+} from "@nextui-org/react";
+import { LayoutDashboard, ListOrdered } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { ProfileSelector } from "./ProfileSelector";
 
 export function Navigation() {
   const location = useLocation();
@@ -20,7 +25,7 @@ export function Navigation() {
           <Button
             as={Link}
             to="/"
-            variant={location.pathname === '/' ? 'solid' : 'light'}
+            variant={location.pathname === "/" ? "solid" : "light"}
             startContent={<LayoutDashboard size={20} />}
           >
             Dashboard
@@ -30,7 +35,7 @@ export function Navigation() {
           <Button
             as={Link}
             to="/transactions"
-            variant={location.pathname === '/transactions' ? 'solid' : 'light'}
+            variant={location.pathname === "/transactions" ? "solid" : "light"}
             startContent={<ListOrdered size={20} />}
           >
             Transações

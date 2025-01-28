@@ -1,18 +1,17 @@
-import React from 'react';
-import { Button, ButtonGroup } from '@nextui-org/react';
-import { useProfile } from '../context/ProfileContext';
-import { Briefcase, User, Building2 } from 'lucide-react';
+import { Button, ButtonGroup } from "@nextui-org/react";
+import { Briefcase, Building2, User } from "lucide-react";
+import { useProfile } from "../context/ProfileContext";
 
 export function ProfileSelector() {
   const { currentProfile, setCurrentProfile, profiles } = useProfile();
 
   const getIcon = (profileId: string) => {
     switch (profileId) {
-      case 'personal':
+      case "personal":
         return <User size={20} />;
-      case 'yoma':
+      case "yoma":
         return <Briefcase size={20} />;
-      case 'mou':
+      case "mou":
         return <Building2 size={20} />;
       default:
         return null;
@@ -26,8 +25,8 @@ export function ProfileSelector() {
           key={profile.id}
           size="lg"
           startContent={getIcon(profile.id)}
-          variant={currentProfile === profile.id ? 'solid' : 'flat'}
-          color={currentProfile === profile.id ? 'primary' : 'default'}
+          variant={currentProfile === profile.id ? "solid" : "flat"}
+          color={currentProfile === profile.id ? "primary" : "default"}
           onPress={() => setCurrentProfile(profile.id as any)}
           className="px-6"
         >

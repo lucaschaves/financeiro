@@ -1,21 +1,21 @@
-import React, { createContext, useContext, useState } from 'react';
-import { ProfileType, Profile } from '../types';
+import React, { createContext, useContext, useState } from "react";
+import { Profile, ProfileType } from "../types";
 
 const profiles: Profile[] = [
   {
-    id: 'personal',
-    name: 'Pessoal',
-    description: 'Finanças pessoais',
+    id: "personal",
+    name: "Pessoal",
+    description: "Finanças pessoais",
   },
   {
-    id: 'yoma',
-    name: 'Yoma',
-    description: 'Finanças da empresa Yoma',
+    id: "yoma",
+    name: "Yoma",
+    description: "Finanças da empresa Yoma",
   },
   {
-    id: 'mou',
-    name: 'MOU',
-    description: 'Finanças da empresa MOU',
+    id: "mou",
+    name: "MOU",
+    description: "Finanças da empresa MOU",
   },
 ];
 
@@ -28,7 +28,7 @@ interface ProfileContextType {
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [currentProfile, setCurrentProfile] = useState<ProfileType>('personal');
+  const [currentProfile, setCurrentProfile] = useState<ProfileType>("personal");
 
   return (
     <ProfileContext.Provider
@@ -46,7 +46,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 export function useProfile() {
   const context = useContext(ProfileContext);
   if (context === undefined) {
-    throw new Error('useProfile must be used within a ProfileProvider');
+    throw new Error("useProfile must be used within a ProfileProvider");
   }
   return context;
 }
